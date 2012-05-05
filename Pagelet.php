@@ -46,20 +46,20 @@ class LessPHP_Pagelet
         }
         
         foreach (array('REQUEST_URI','PATH_INFO','ORIG_PATH_INFO') as $v) {
-	        preg_match('/^\/[\w\-~\/\.+%]{1,600}/', getenv($v), $p);
-	        if (!empty($p)) {
-	            $this->app->uri = trim($p[0], '/');
-	            if (stristr($this->app->uri, '/')) {
-	                $this->app->appid  = stristr($this->app->uri, '/', true);
-	                $this->app->action = trim(stristr($this->app->uri, '/'), '/');
-	            }
-	            break;
-	        }
-	    }
+            preg_match('/^\/[\w\-~\/\.+%]{1,600}/', getenv($v), $p);
+            if (!empty($p)) {
+                $this->app->uri = trim($p[0], '/');
+                if (stristr($this->app->uri, '/')) {
+                    $this->app->appid  = stristr($this->app->uri, '/', true);
+                    $this->app->action = trim(stristr($this->app->uri, '/'), '/');
+                }
+                break;
+            }
+        }
         
         $this->app->method = getenv('REQUEST_METHOD');
        
-	    
+        
         foreach ($_REQUEST as $key => $val) {
             $this->req->$key = $val;
         }
@@ -124,18 +124,21 @@ class LessPHP_Pagelet
         // to ensure consistent string, dates, times and numbers handling.
         setlocale(LC_ALL, 'en_US.utf-8');
         
+        // Sets the default timezone used by all date/time functions in a script
+        date_default_timezone_set("Asia/Shanghai");
+        
         if (ini_get('magic_quotes_gpc')) {
-	        function stripa(&$v) {
-		        $v = stripslashes($v);
-	        }	
-	        function stripf(&$v, $k) {
-	            if ($k != 'tmp_name') $v = stripslashes($v);
-	        }
-	        array_walk_recursive($_GET,     'stripa');
-	        array_walk_recursive($_POST,    'stripa');
-	        array_walk_recursive($_COOKIE,  'stripa');
-	        array_walk_recursive($_REQUEST, 'stripa');
-	        array_walk_recursive($_FILES,   'stripf');
+            function stripa(&$v) {
+                $v = stripslashes($v);
+            }
+            function stripf(&$v, $k) {
+                if ($k != 'tmp_name') $v = stripslashes($v);
+            }
+            array_walk_recursive($_GET,     'stripa');
+            array_walk_recursive($_POST,    'stripa');
+            array_walk_recursive($_COOKIE,  'stripa');
+            array_walk_recursive($_REQUEST, 'stripa');
+            array_walk_recursive($_FILES,   'stripf');
         }
     }
 }
