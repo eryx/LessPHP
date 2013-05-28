@@ -47,6 +47,15 @@ class Client
         );
         return $this->request($req);
     }
+    
+    public function NodeGets($path)
+    {
+        $req = array(
+            'method' => 'gets',
+            'path'   => $path
+        );
+        return $this->request($req);
+    }
 
     public function NodeList($path)
     {

@@ -1,7 +1,0 @@
----
-appid: LessPHP
-name: Less PHP Library
-summary: Very Simple PHP Library
-version: 1.0.0-dev
-release: 1
-depends:
