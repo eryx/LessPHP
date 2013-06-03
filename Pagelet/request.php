@@ -10,7 +10,7 @@ class hwl_pagelet_request extends hwl_object
     public $uri     = 'hww/index';
     
     /** AppID/Action */
-    public $appid   = NULL;
+    public $projid   = NULL;
     public $action  = NULL;
     
     /**  **/
@@ -28,7 +28,7 @@ class hwl_pagelet_request extends hwl_object
 	        if (!empty($p)) {
 	            $this->uri = trim($p[0], '/');
 	            if (stristr($this->uri, '/')) {
-	                $this->appid  = stristr($this->uri, '/', true);
+	                $this->projid  = stristr($this->uri, '/', true);
 	                $this->action = trim(stristr($this->uri, '/'), '/');
 	            }
 	            break;

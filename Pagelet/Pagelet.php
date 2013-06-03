@@ -42,7 +42,7 @@ class LessPHP_Pagelet
         }
         
         if (isset($opt['uri_default'])) {
-            list($this->app->appid, $this->app->action) = explode('/', $opt['uri_default']);
+            list($this->app->projid, $this->app->action) = explode('/', $opt['uri_default']);
         }
         
         foreach (array('REQUEST_URI','PATH_INFO','ORIG_PATH_INFO') as $v) {
@@ -50,7 +50,7 @@ class LessPHP_Pagelet
 	        if (!empty($p)) {
 	            $this->app->uri = trim($p[0], '/');
 	            if (stristr($this->app->uri, '/')) {
-	                $this->app->appid  = stristr($this->app->uri, '/', true);
+	                $this->app->projid  = stristr($this->app->uri, '/', true);
 	                $this->app->action = trim(stristr($this->app->uri, '/'), '/');
 	            }
 	            break;
@@ -132,7 +132,7 @@ class LessPHP_Pagelet
         }
         
         foreach ($this->path as $v) {
-            $t = "{$v}/{$this->app->appid}/pagelet/{$action}.php";
+            $t = "{$v}/{$this->app->projid}/pagelet/{$action}.php";
             if (file_exists($t)) {
                 include $t;
                 break;

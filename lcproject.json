@@ -1,8 +1,10 @@
 {
-    "appid":"LessPHP",
+    "projid":"LessPHP",
     "name":"Less PHP Library",
     "summary":"Very Simple PHP Library",
     "version":"1.0.0-dev",
-    "release":1,
-    "depends":""
+    "release":"1",
+    "depends":"",
+    "arch":"all",
+    "targetdir":"LessPHP"
 }

@@ -17,12 +17,12 @@ class hwl_pagelet_view extends hwl_object
         array_unshift($this->_paths, rtrim($path, '/'));
     }
     
-    public function prerender($name, $action, $vars = NULL, $appid = NULL)
+    public function prerender($name, $action, $vars = NULL, $projid = NULL)
     {
-        $this->{$name} = $this->render($action, $vars, $appid);
+        $this->{$name} = $this->render($action, $vars, $projid);
     }
     
-    public function render($action, $vars = NULL, $appid = NULL)
+    public function render($action, $vars = NULL, $projid = NULL)
     {
         ob_start();
         
@@ -33,9 +33,9 @@ class hwl_pagelet_view extends hwl_object
             unset($vars);
         }
         
-        if ($appid !== NULL) {
+        if ($projid !== NULL) {
         
-            $f = SYS_ROOT."/{$appid}/pagelet/{$action}.php";            
+            $f = SYS_ROOT."/{$projid}/pagelet/{$action}.php";            
             if (file_exists($f)) {
                 include $f;
             }
