@@ -21,12 +21,12 @@ class Client
     private $http;
     
     // Creates a connection to the h5keeper at the address specified by {@link $dsn}.
-    // The default connection is to the server running on localhost on port 9530.
+    // The default connection is to the server running on localhost on port 9528.
     // @param string $dsn The data source name of the h5keeper server
     // @param float $timeout The connection timeout in seconds
     public function __construct($dsn = '127.0.0.1:9528', $timeout = null)
     {
-        $this->http = new Http("http://{$dsn}/h5keeper/apiv2");
+        $this->http = new Http("http://{$dsn}/h5keeper/api");
     }
 
     private function request($obj)
@@ -47,15 +47,6 @@ class Client
         );
         return $this->request($req);
     }
-    
-    public function NodeGets($path)
-    {
-        $req = array(
-            'method' => 'gets',
-            'path'   => $path
-        );
-        return $this->request($req);
-    }
 
     public function NodeList($path)
     {
@@ -72,6 +63,15 @@ class Client
             'method' => 'set',
             'path'   => $path,
             'val'    => "".$val
+        );
+        return $this->request($req);
+    }
+    
+    public function NodeDel($path)
+    {
+        $req = array(
+            'method' => 'del',
+            'path'   => $path
         );
         return $this->request($req);
     }
