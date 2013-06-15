@@ -9,6 +9,8 @@ class Client
     const StatusOK                  = "0";
     const StatusErr                 = "1";
 
+    const ReplyString               = 12;
+
     const EventNone                 = "10";
     const EventNodeCreated          = "11";
     const EventNodeDeleted          = "12";
@@ -39,40 +41,63 @@ class Client
         return json_decode($this->http->GetBody(), false);
     }
     
-    public function NodeGet($path)
+    private function _nodegen($method, $path)
     {
         $req = array(
-            'method' => 'get',
+            'method' => $method,
             'path'   => $path
-        );
-        return $this->request($req);
-    }
-
-    public function NodeList($path)
-    {
-        $req = array(
-            'method' => 'list',
-            'path'   => $path,
-        );
-        return $this->request($req);
-    }
-
-    public function NodeSet($path, $val)
-    {
-        $req = array(
-            'method' => 'set',
-            'path'   => $path,
-            'val'    => "".$val
         );
         return $this->request($req);
     }
     
-    public function NodeDel($path)
+    private function _nodegenset($method, $path, $val, $ttl = 0)
     {
         $req = array(
-            'method' => 'del',
-            'path'   => $path
+            'method' => $method,
+            'path'   => $path,
+            'val'    => "".$val,
+            'ttl'    => intval($ttl)
         );
         return $this->request($req);
+    }
+    
+    public function NodeGet($path)
+    {
+        return $this->_nodegen('get', $path);
+    }
+
+    public function NodeList($path)
+    {
+        return $this->_nodegen('list', $path);
+    }    
+    
+    public function NodeDel($path)
+    {
+        return $this->_nodegen('del', $path);
+    }
+    
+    public function NodeSet($path, $val)
+    {
+        return $this->_nodegenset('set', $path, $val);
+    }
+    
+    public function LocalNodeGet($path)
+    {
+        return $this->_nodegen('locget', $path);
+    }
+
+    public function LocalNodeList($path)
+    {
+        return $this->_nodegen('loclist', $path);
+    }    
+    
+    public function LocalNodeDel($path)
+    {
+        return $this->_nodegen('locdel', $path);
+    }
+    
+    public function LocalNodeSet($path, $val, $ttl = 3600)
+    {
+        return $this->_nodegenset('locset', $path, $val, $ttl);
     }
 }
