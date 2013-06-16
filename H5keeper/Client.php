@@ -9,7 +9,18 @@ class Client
     const StatusOK                  = "0";
     const StatusErr                 = "1";
 
+    const ReplyOK                   = 0;
+    const ReplyError                = 1;
+    const ReplyTimeout              = 2;
+    const ReplyNotExist             = 3;
+    const ReplyAccessDenied         = 4;
+    
+    const ReplyNil                  = 10;
+    const ReplyInteger              = 11;
     const ReplyString               = 12;
+    const ReplyJson                 = 13;
+    const ReplyMulti                = 14;
+    const ReplyWatch                = 15;
 
     const EventNone                 = "10";
     const EventNodeCreated          = "11";
@@ -99,5 +110,23 @@ class Client
     public function LocalNodeSet($path, $val, $ttl = 3600)
     {
         return $this->_nodegenset('locset', $path, $val, $ttl);
+    }
+
+    public function Info()
+    {
+        $req = array(
+            'method' => 'info',
+        );
+        return $this->request($req);
+    }
+
+    public function KprMemberSet($addr, $port)
+    {
+        $req = array(
+            'method' => 'kprmemset',
+            'addr' => $addr,
+            'port' => $port
+        );
+        return $this->request($req);
     }
 }

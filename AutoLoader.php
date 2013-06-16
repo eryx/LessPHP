@@ -11,3 +11,10 @@ function lessAutoload($class)
 
 spl_autoload_register("lessAutoload");
 
+
+function lessRegistry($k, $v = null)
+{
+	static $o;
+	return (func_num_args() > 1 ? $o[$k] = $v : (isset($o[$k]) ? $o[$k] : null));	
+}
+
