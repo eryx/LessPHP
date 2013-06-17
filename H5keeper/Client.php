@@ -22,6 +22,9 @@ class Client
     const ReplyMulti                = 14;
     const ReplyWatch                = 15;
 
+    const NodeTypeDir               = 1;
+    const NodeTypeFile              = 2;
+
     const EventNone                 = "10";
     const EventNodeCreated          = "11";
     const EventNodeDeleted          = "12";
