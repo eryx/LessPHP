@@ -22,6 +22,7 @@ class Client
     const ReplyMulti                = 14;
     const ReplyWatch                = 15;
 
+    const NodeTypeNil               = 0;
     const NodeTypeDir               = 1;
     const NodeTypeFile              = 2;
 
@@ -83,7 +84,29 @@ class Client
     public function NodeList($path)
     {
         return $this->_nodegen('list', $path);
-    }    
+    } 
+    
+    public function NodeListAndGet($path)
+    {
+        $rs = $this->NodeList($path);
+
+        $items = json_decode($rs->body, false);
+        foreach ($items as $v) {
+            
+            $rs2 = $this->NodeGet($path."/".$v->P);
+            
+            if ($rs2->type == self::ReplyError) {
+                continue;
+            }
+            
+            $rs->elems[] = $rs2;
+        }
+        
+        $rs->type = self::ReplyMulti;
+        $rs->body = null;
+        
+        return $rs;
+    }
     
     public function NodeDel($path)
     {
