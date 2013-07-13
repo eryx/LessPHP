@@ -6,8 +6,10 @@ if (!in_array(LessPHP_DIR, explode(':', get_include_path()))) {
     set_include_path(LessPHP_DIR . PATH_SEPARATOR . get_include_path());
 }
 
+
 // autoload_register
-function pagelet_autoload($class) {    
+function pagelet_autoload($class)
+{
     $t = str_replace(array('_', "\\"), '/', $class.'.php');
     require_once ($t);
 }
