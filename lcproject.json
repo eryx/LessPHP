@@ -2,7 +2,7 @@
   "projid":"LessPHP",
   "name":"Less PHP Library",
   "summary":"Very Simple PHP Library",
-  "version":"1.0.0-dev",
+  "version":"1.0.1",
   "release":"1",
   "depends":"",
   "types": "libphp",
