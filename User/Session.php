@@ -8,6 +8,7 @@ use LessPHP\H5keeper\Client;
 final class Session
 {   
     protected static $_instance = null;
+    protected static $_navmenus = null;
     
     // TODO
     public static function Instance()
@@ -44,12 +45,63 @@ final class Session
     }
 
     //
-    public static function isLogin($uid = '0')
+    public static function IsLogin()
     {
-        if ($uid == '0') {
-            return (self::Instance()->uid != '0' ? true : false);
+        if (isset(self::Instance()->uid) && self::Instance()->uid != '0') {
+            return true;
+        } else {
+            setcookie("access_token", '', 1, '/');
+            @session_destroy();
         }
 
-        return (($uid === self::Instance()->uid) ? true : false);
+        return false;
+    }
+    
+    // TODO
+    public static function NavMenus($uname)
+    {
+        if (!self::IsLogin()) {
+            return array();
+        }
+        
+        if ($uname != 'ue' && $uname != self::Instance()->uname) {
+            return array();
+        }
+        
+        if (self::$_navmenus !== null) {
+            return self::$_navmenus;
+        }
+        
+        $ms = array();
+        
+        try {
+
+            $kpr = new Client();
+
+            $rs = $kpr->NodeListAndGet("/app/ui/{$uname}");            
+
+            foreach ($rs->elems as $pkg) {
+                
+                $pkg = json_decode($pkg->body, false);
+                
+                $props = explode(",", $pkg->props);
+                
+                if (!in_array("pagelet", $props)) {
+                    continue;
+                }
+                
+                $ms[] = (object)array(
+                    'name' => $pkg->name,
+                    'projid' => $pkg->projid,
+                );
+            }
+                    
+            self::$_navmenus = $ms;
+
+        } catch (\Exception $e) {
+
+        }
+        
+        return $ms;
     }
 }
