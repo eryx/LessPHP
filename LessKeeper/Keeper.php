@@ -1,10 +1,10 @@
 <?php
 
-namespace LessPHP\H5keeper;
+namespace LessPHP\LessKeeper;
 
 use LessPHP\Net\Http;
 
-class Client
+class Keeper
 {
     const StatusOK                  = "0";
     const StatusErr                 = "1";
@@ -32,18 +32,18 @@ class Client
     const EventNodeDataChanged      = "13";
     const EventNodeChildrenChanged  = "14";
 
-    // Http connection to the h5keeper service
+    // Http connection to the LessKeeper service
     // @var resource
     // @access private
     private $http;
     
-    // Creates a connection to the h5keeper at the address specified by {@link $dsn}.
+    // Creates a connection to the LessKeeper at the address specified by {@link $dsn}.
     // The default connection is to the server running on localhost on port 9528.
-    // @param string $dsn The data source name of the h5keeper server
+    // @param string $dsn The data source name of the LessKeeper server
     // @param float $timeout The connection timeout in seconds
     public function __construct($dsn = '127.0.0.1:9528', $timeout = null)
     {
-        $this->http = new Http("http://{$dsn}/h5keeper/api");
+        $this->http = new Http("http://{$dsn}/lesskeeper/api");
     }
 
     private function request($obj)
