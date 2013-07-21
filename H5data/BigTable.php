@@ -21,7 +21,7 @@ class BigTable extends Base
     {
         parent::__construct($tableid);
 
-        self::$kpr = new H5keeper\Client("127.0.0.1:9530");
+        self::$kpr = new LessKeeper\Keeper("127.0.0.1:9530");
         
         $inst = self::$kpr->Get("/h5db/inst/". $this->data_instance);
         self::$inst = json_decode($inst, true);

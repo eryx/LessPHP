@@ -2,7 +2,7 @@
 
 namespace LessPHP\User;
 
-use LessPHP\H5keeper\Client;
+use LessPHP\LessKeeper\Keeper;
 
 
 final class Session
@@ -25,7 +25,7 @@ final class Session
 
                 try {
 
-                    $kpr = new Client();
+                    $kpr = new Keeper();
 
                     $rs = $kpr->LocalNodeGet("/u/s/{$sid}");
 
@@ -76,7 +76,7 @@ final class Session
         
         try {
 
-            $kpr = new Client();
+            $kpr = new Keeper();
 
             $rs = $kpr->NodeListAndGet("/app/ui/{$uname}");            
 
