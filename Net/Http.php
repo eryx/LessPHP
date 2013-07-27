@@ -111,7 +111,9 @@ class Http
     {
         $this->_conn();
         
-        $this->setHeader(self::CONTENT_LENGTH, strlen($body));
+        if (is_string($body)) {
+            $this->setHeader(self::CONTENT_LENGTH, strlen($body));
+        }
         curl_setopt($this->_conn, CURLOPT_POST, true);
         curl_setopt($this->_conn, CURLOPT_POSTFIELDS, $body);
         
@@ -122,7 +124,9 @@ class Http
     {
         $this->_conn();
         
-        $this->setHeader(self::CONTENT_LENGTH, strlen($body));
+        if (is_string($body)) {
+            $this->setHeader(self::CONTENT_LENGTH, strlen($body));
+        }
         curl_setopt($this->_conn, CURLOPT_CUSTOMREQUEST, 'PUT');
         curl_setopt($this->_conn, CURLOPT_POSTFIELDS, $body);
         
