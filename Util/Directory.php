@@ -4,6 +4,30 @@ namespace LessPHP\Util;
 
 final class Directory
 {
+    public static function listFiles($dir, $sub = NULL)
+    {
+        $a = array();
+        $p = ($sub ? opendir("$dir/$sub") : opendir($dir));
+        if ($p) {
+
+            while (($file = readdir($p)) !== false) {
+                if ($file === '.' || $file === '..') {
+                    continue;
+                }
+                $tmp = realpath("$dir/$sub/$file");
+                if (is_dir($tmp)) {
+                    $a = array_merge($a, self::listFiles($dir, $sub.'/'.$file));
+                } else {
+                    $a[] = ($sub ? $sub."/" : "").$file;
+                }
+            }
+
+            closedir($p);
+        }
+        
+        return $a;
+    }
+    
     /**
      * 
      *
@@ -41,5 +65,30 @@ final class Directory
         $path = pathinfo($path);
         $path = $path['dirname'];
         self::mkdir($path, $mode);
+    }
+    
+    public static function rmdir($path)
+    {
+        if (!$p = opendir($path)) {
+            return false;
+        }
+        
+        while (($file = readdir($p)) !== false) {
+            
+            if ($file === '.' || $file === '..') {
+                continue;
+            }
+
+            if (is_dir($path.'/'.$file)) {
+                self::rmdir($path.'/'.$file);
+            } else {
+                unlink($path.'/'.$file);
+            }            
+        }
+
+        closedir($p);        
+        rmdir($path);
+        
+        return true;
     }
 }
