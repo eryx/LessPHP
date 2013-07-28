@@ -4,5 +4,6 @@
   "summary":"Very Simple PHP Library",
   "version":"1.0.1.dev",
   "depends":"",
-  "types":"libphp"
+  "types":"libphp",
+  "release":"1"
 }
