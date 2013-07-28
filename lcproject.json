@@ -3,9 +3,6 @@
   "name":"Less PHP Library",
   "summary":"Very Simple PHP Library",
   "version":"1.0.1.dev",
-  "release":"1",
   "depends":"",
-  "types": "libphp",
-  "arch":"all",
-  "targetdir":"LessPHP"
+  "types":"libphp"
 }
