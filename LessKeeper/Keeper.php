@@ -128,6 +128,28 @@ class Keeper
         return $this->_nodegen('loclist', $path);
     }    
     
+    public function LocalNodeListAndGet($path)
+    {
+        $rs = $this->LocalNodeList($path);
+
+        $items = json_decode($rs->body, false);
+        foreach ($items as $v) {
+            
+            $rs2 = $this->LocalNodeGet($path."/".$v->P);
+            
+            if ($rs2->type == self::ReplyError) {
+                continue;
+            }
+            
+            $rs->elems[] = $rs2;
+        }
+        
+        $rs->type = self::ReplyMulti;
+        $rs->body = null;
+        
+        return $rs;
+    }
+
     public function LocalNodeDel($path)
     {
         return $this->_nodegen('locdel', $path);
