@@ -84,7 +84,7 @@ class Keeper
     public function NodeList($path)
     {
         return $this->_nodegen('list', $path);
-    } 
+    }
     
     public function NodeListAndGet($path)
     {
