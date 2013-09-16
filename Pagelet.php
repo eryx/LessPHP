@@ -27,6 +27,9 @@ class LessPHP_Pagelet
     public  $sess   = NULL;
     
     public  $app    = NULL;
+    
+    private $i18n   = array();
+    private $locale = "zh_CN";
 
     public function __construct($opt = array())
     {
@@ -98,6 +101,37 @@ class LessPHP_Pagelet
         }
 
         return ob_get_clean();
+    }
+    
+    public function translationFileAdd($locale, $file)
+    {
+        $ls = require $file;
+        if (!is_array($ls)) {
+            return;
+        }
+        
+        if (!isset($this->i18n[$locale])) {
+
+            $this->i18n[$locale] = $ls;
+        } else {
+            
+            $this->i18n[$locale] = array_merge($this->i18n[$locale], $ls);
+        }
+    }
+    
+    public function T($string, $locale = null)
+    {
+        if ($locale === null) {
+            $locale = $this->locale;
+        }
+        
+        if (isset($this->i18n[$locale])
+            && isset($this->i18n[$locale][$string])) {
+        
+            return $this->i18n[$locale][$string];
+        }
+        
+        return $string;
     }
     
     private function _initSetting()

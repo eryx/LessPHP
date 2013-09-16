@@ -3,6 +3,7 @@
   "name":"Less PHP Library",
   "summary":"Very Simple PHP Library",
   "version":"0.1.1.dev",
+  "props_dev": "61",
   "depends":"",
   "release":"1"
 }
