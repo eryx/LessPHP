@@ -1,9 +1,11 @@
 <?php
 
-define('LessPHP_DIR', realpath(__DIR__ . '/..'));
+use LessPHP\Pagelet\Translator;
 
-if (!in_array(LessPHP_DIR, explode(':', get_include_path()))) {
-    set_include_path(LessPHP_DIR . PATH_SEPARATOR . get_include_path());
+define('LESSPHP_DIR', realpath(__DIR__ .'/..'));
+
+if (!in_array(LESSPHP_DIR, explode(':', get_include_path()))) {
+    set_include_path(LESSPHP_DIR . PATH_SEPARATOR . get_include_path());
 }
 
 
@@ -14,6 +16,8 @@ function pagelet_autoload($class)
     require_once ($t);
 }
 spl_autoload_register("pagelet_autoload");
+
+
 
 //set_error_handler(array('hwl_error','handler'));
 //register_shutdown_function(array('hwl_error','fatal'));
@@ -105,33 +109,12 @@ class LessPHP_Pagelet
     
     public function translationFileAdd($locale, $file)
     {
-        $ls = require $file;
-        if (!is_array($ls)) {
-            return;
-        }
-        
-        if (!isset($this->i18n[$locale])) {
-
-            $this->i18n[$locale] = $ls;
-        } else {
-            
-            $this->i18n[$locale] = array_merge($this->i18n[$locale], $ls);
-        }
+        Translator::translationFileAdd($locale, $file);
     }
     
     public function T($string, $locale = null)
     {
-        if ($locale === null) {
-            $locale = $this->locale;
-        }
-        
-        if (isset($this->i18n[$locale])
-            && isset($this->i18n[$locale][$string])) {
-        
-            return $this->i18n[$locale][$string];
-        }
-        
-        return $string;
+        return Translator::T($string, $locale);
     }
     
     private function _initSetting()

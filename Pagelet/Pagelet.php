@@ -1,9 +1,9 @@
 <?php
 
-define('LessPHP_DIR', realpath(__DIR__ . '/..'));
+define('LESSPHP_DIR', realpath(__DIR__ . '/..'));
 
-if (!in_array(LessPHP_DIR, explode(':', get_include_path()))) {
-    set_include_path(LessPHP_DIR . PATH_SEPARATOR . get_include_path());
+if (!in_array(LESSPHP_DIR explode(':', get_include_path()))) {
+    set_include_path(LESSPHP_DIR . PATH_SEPARATOR . get_include_path());
 }
 
 // autoload_register
