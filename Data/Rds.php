@@ -80,9 +80,9 @@ final class Rds
                 $o['1002'] = "SET NAMES 'utf8'";
                 $o[\PDO::ATTR_PERSISTENT] = true;
             //}
-            $dsn = "mysql:host={$c->accessaddr};dbname={$c->datainstid}";
+            $dsn = "mysql:host={$c->access_host};dbname={$c->access_dbname}";
 
-            self::$conns[$dbset] = new \PDO($dsn, $c->accessuser, $c->accesspass, $o);
+            self::$conns[$dbset] = new \PDO($dsn, $c->access_user, $c->access_pass, $o);
         }
         
         return self::$conns[$dbset];
